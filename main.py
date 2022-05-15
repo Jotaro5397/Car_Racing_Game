@@ -3,12 +3,20 @@ import time
 import math
 from utils import scale_image, blit_rotate_center, blit_text_center
 pygame.font.init()
+# souund
+pygame.init()
+pygame.mixer.init()
+
 
 
 # Initialising
 
 # Load all images needed for the game as well as scaling them with code to have them fit the window
 # Using mask to check if pixels which are not transparent are overlapping another
+
+pygame.mixer.music.load('background_sound.wav')
+
+pygame.mixer.music.play(-1)
 
 GRASS = scale_image(pygame.image.load("imgs/bg-track.png"),  0.8)
 TRACK = scale_image(pygame.image.load("imgs/track1.png"), 0.8)
@@ -131,6 +139,8 @@ class PlayerCar(AbstractCar):
     def bounce(self):
         self.vel = -self.vel
         self.move()
+
+
 
 # class for computer car and image for the and starting pos
 class ComputerCar(AbstractCar):
@@ -289,9 +299,9 @@ player_car = PlayerCar(4, 4)
 # Computer car speed and path set
 computer_car = ComputerCar(2, 2, PATH)
 game_info = GameInfo()
+# load sound and makes it play
 
 # Main event loop to make everything run
-
 while run:
     clock.tick(FPS)
     # Initialises draw
@@ -326,6 +336,9 @@ while run:
     computer_car.move()
  # start handle collision function
     handle_collision(player_car, computer_car, game_info)
+
+
+
 
 # if player win the game
     if game_info.game_finished():
